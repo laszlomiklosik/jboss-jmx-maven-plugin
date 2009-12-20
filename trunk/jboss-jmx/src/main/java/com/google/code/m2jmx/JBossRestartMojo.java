@@ -24,6 +24,7 @@ public class JBossRestartMojo extends AbstractMojo {
 
 	private static final String PORT_PLACEHOLDER = "{port}";
 
+	// arg0 must be 1 for linux, 6 for windows...
 	private static final String SERVER_RESTART_URL = "http://"
 			+ HOST_PLACEHOLDER
 			+ ":"
@@ -36,11 +37,11 @@ public class JBossRestartMojo extends AbstractMojo {
 			+ PORT_PLACEHOLDER
 			+ "/jmx-console/HtmlAdaptor?action=inspectMBean&name=jboss.system:type=Server";
 
-	private static final int RESTART_CHECK_INTERVAL_SECONDS = 10;
+	private static final int RESTART_CHECK_INTERVAL_SECONDS = 5;
 
 	private static final int PROGRESS_DIVISION_INTERVAL_SECONDS = 1;
 
-	private static final int MAX_CHECKS_FOR_RESTART = 6;
+	private static final int MAX_CHECKS_FOR_RESTART = 12;
 
 	/**
 	 * @parameter expression="${restart.host}" default-value="localhost"
@@ -53,12 +54,12 @@ public class JBossRestartMojo extends AbstractMojo {
 	private String serverPort;
 
 	/**
-	 * @parameter expression="${restart.jmxConsoleUser}" default-value=null
+	 * @parameter expression="${restart.jmxConsoleUser}" default-value=""
 	 */
 	private String jmxConsoleUser;
 
 	/**
-	 * @parameter expression="${restart.jmxConsolePassword}" default-value=null
+	 * @parameter expression="${restart.jmxConsolePassword}" default-value=""
 	 */
 	private String jmxConsolePassword;
 
@@ -89,12 +90,8 @@ public class JBossRestartMojo extends AbstractMojo {
 			boolean restartComplete = false;
 			while (attemptCounter < MAX_CHECKS_FOR_RESTART) {
 				attemptCounter++;
-				getLog()
-						.info(
-								"Waiting "
-										+ RESTART_CHECK_INTERVAL_SECONDS
-										+ " seconds before checking whether JBoss finished restarting.");
 				waitBetweenChecks();
+				getLog().info("Re-checking JBoss state.");
 				restartComplete = isRestartCompleted();
 				if (restartComplete) {
 					getLog().info("Server has been successfully restarted.");
@@ -114,7 +111,8 @@ public class JBossRestartMojo extends AbstractMojo {
 		} catch (IOException e) {
 			getLog().error(e);
 			throw new MojoFailureException(
-					"JBoss JMX console not available. Cannot restart JBoss.");
+					"JBoss JMX console not available or the supplied user/password is not correct. "
+							+ "Cannot restart JBoss.");
 		} catch (Exception e) {
 			throw new MojoExecutionException(
 					"An unknown error occured while trying to restart JBoss.");
@@ -123,13 +121,11 @@ public class JBossRestartMojo extends AbstractMojo {
 	}
 
 	private void authorizeConnection(URLConnection conn) {
-		if (jmxConsoleUser != null && jmxConsolePassword != null) {
-			String authorizationString = jmxConsoleUser + ":"
-					+ jmxConsolePassword;
-			String encoding = new BASE64Encoder().encode(authorizationString
-					.getBytes());
-			conn.setRequestProperty("Authorization", "Basic " + encoding);
-		}
+		String authorizationString = jmxConsoleUser + ":" + jmxConsolePassword;
+		String encoding = new BASE64Encoder().encode(authorizationString
+				.getBytes());
+		conn.setRequestProperty("Authorization", "Basic " + encoding);
+
 	}
 
 	private void waitBetweenChecks() {
@@ -158,19 +154,13 @@ public class JBossRestartMojo extends AbstractMojo {
 					serverHost).replace(PORT_PLACEHOLDER, serverPort));
 			URLConnection conn = url.openConnection();
 			authorizeConnection(conn);
-			
+
+			// if the stream cannot be created (IOException), then the restart
+			// did not finish yet.
 			BufferedReader in = new BufferedReader(new InputStreamReader(conn
 					.getInputStream()));
-			
-			in.close();
-			
-			/*String response = null;
-			while((response = in.readLine()) != null) {
-				// eventually check for the word "Started"
-				System.out.println(response);
-			}*/
 
-			
+			in.close();
 			restartSucessful = true;
 		} catch (MalformedURLException e) {
 			restartSucessful = false;
