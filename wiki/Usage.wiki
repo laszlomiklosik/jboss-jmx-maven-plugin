@@ -7,6 +7,10 @@ TODO: add some intro here
 
 = Usage =
 
+*Step 0*
+
+Install this Maven 2 plugin to your group (or local, if not using a group repository) repository.
+
 *Step 1*
 
 In your project's pom.xml add the following:
