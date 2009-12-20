@@ -10,24 +10,26 @@ TODO: add some intro here
 *Step 1*
 
 In your project's pom.xml add the following:
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>com.google.code</groupId>
-				<artifactId>jboss-jmx</artifactId>
-				<version>0.1</version>
-				<configuration>
-					<serverHost>127.0.0.1</serverHost>
-					<serverPort>8080</serverPort>
-					<jmxConsoleUser>admin</jmxConsoleUser>
-					<jmxConsolePassword>adminadmin</jmxConsolePassword>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+{{{
+<build>
+	<plugins>
+		<plugin>
+			<groupId>com.google.code</groupId>
+			<artifactId>jboss-jmx</artifactId>
+			<version>0.1</version>
+			<configuration>
+				<serverHost>127.0.0.1</serverHost>
+				<serverPort>8080</serverPort>
+				<jmxConsoleUser>admin</jmxConsoleUser>
+				<jmxConsolePassword>adminadmin</jmxConsolePassword>
+			</configuration>
+		</plugin>
+	</plugins>
+</build>
+}}}
 
 *Step 2*
 
 execute the _jboss-jmx:restart_ maven goal
+
 (e.g. execute _mvn jboss-jmx:restart_ from the command line of your project's root directory)
