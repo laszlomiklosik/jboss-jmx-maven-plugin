@@ -15,6 +15,7 @@ import sun.misc.BASE64Encoder;
 
 /**
  * JBoss restart mojo - use to restart a JBoss server via its JMX console.
+ * 
  * @goal restart
  */
 public class JBossRestartMojo extends AbstractMojo {
@@ -27,34 +28,17 @@ public class JBossRestartMojo extends AbstractMojo {
 	private static final String SUCCESS = "success";
 
 	/**
-	 * Host name place-holder. It will be replaced by the name or the IP of the
-	 * host on which JBoss is running.<br>
-	 */
-	private static final String HOST_PLACEHOLDER = "{host}";
-
-	/**
-	 * Port place-holder. It will be replaced by the name or the port on which
-	 * JBoss is listening.<br>
-	 */
-	private static final String PORT_PLACEHOLDER = "{port}";
-
-	// methodIndex must be 1 for linux, 6 for windows...
-	/**
 	 * JBoss restart via JMX URL.
 	 */
-	private static final String SERVER_RESTART_URL = "http://"
-			+ HOST_PLACEHOLDER
-			+ ":"
-			+ PORT_PLACEHOLDER
-			+ "/jmx-console/HtmlAdaptor?action=invokeOp&name=jboss.system:type=Server&methodIndex=1&arg0=10";
+	private static final String SERVER_RESTART_URL = "/jmx-console/HtmlAdaptor?action=invokeOpByName&"
+			+ "name=jboss.system:type=Server&methodName=exit&argType=int&arg0=10";
 
 	/**
 	 * JBoss server state inspection URL. If this URL is alive the JBoss restart
 	 * is considered complete.
 	 */
-	private static final String SERVER_INSPECT_URL = "http://" + HOST_PLACEHOLDER + ":"
-			+ PORT_PLACEHOLDER
-			+ "/jmx-console/HtmlAdaptor?action=inspectMBean&name=jboss.system:type=Server";
+	private static final String SERVER_INSPECT_URL = "/jmx-console/HtmlAdaptor?action=inspectMBean&"
+			+ "name=jboss.system:type=Server";
 
 	/**
 	 * The time interval between 2 consecutive progress indicator dots (in
@@ -84,7 +68,7 @@ public class JBossRestartMojo extends AbstractMojo {
 	/**
 	 * The user name used to access the JMX console.
 	 * 
-	 * @parameter expression="${restart.jmxConsoleUser}" default-value=""
+	 * @parameter expression="${restart.jmxConsoleUser}" default-value="admin"
 	 */
 	private String jmxConsoleUser;
 
@@ -134,7 +118,9 @@ public class JBossRestartMojo extends AbstractMojo {
 	private void logMojoDuration() {
 		final long mojoDurationSeconds = (System.currentTimeMillis() - mojoStartTime) / 1000;
 		if (mojoDurationSeconds < 60) {
-			getLog().info("JBossRestartMojo took " + mojoDurationSeconds + " seconds.");
+			getLog().info(
+					"JBossRestartMojo took " + mojoDurationSeconds
+							+ " seconds.");
 		} else {
 			String minutes = mojoDurationSeconds / 60 + "";
 			String seconds = mojoDurationSeconds % 60 + "";
@@ -144,7 +130,8 @@ public class JBossRestartMojo extends AbstractMojo {
 			if (seconds.length() < 2) {
 				seconds = "0" + seconds;
 			}
-			getLog().info("JBossRestartMojo took (MM:SS) " + minutes + ":" + seconds);
+			getLog().info(
+					"JBossRestartMojo took (MM:SS) " + minutes + ":" + seconds);
 		}
 	}
 
@@ -152,8 +139,7 @@ public class JBossRestartMojo extends AbstractMojo {
 	 * Adapts the URL to use the effective settings.
 	 */
 	private String processURL(String url) {
-		return url.replace(HOST_PLACEHOLDER, serverHost).replace(PORT_PLACEHOLDER, serverPort);
-
+		return "http://" + serverHost + ":" + serverPort + url;
 	}
 
 	/**
@@ -162,7 +148,8 @@ public class JBossRestartMojo extends AbstractMojo {
 	 */
 	private void authorizeConnection(URLConnection conn) {
 		String authorizationString = jmxConsoleUser + ":" + jmxConsolePassword;
-		String encoding = new BASE64Encoder().encode(authorizationString.getBytes());
+		String encoding = new BASE64Encoder().encode(authorizationString
+				.getBytes());
 		conn.setRequestProperty("Authorization", "Basic " + encoding);
 
 	}
@@ -175,13 +162,15 @@ public class JBossRestartMojo extends AbstractMojo {
 		try {
 			url = new URL(processURL(SERVER_RESTART_URL));
 		} catch (MalformedURLException e) {
-			throw new MojoExecutionException("Unparsable server restart URL: " + SERVER_RESTART_URL);
+			throw new MojoExecutionException("Unparsable server restart URL: "
+					+ SERVER_RESTART_URL);
 		}
 
 		URLConnection conn = url.openConnection();
 		authorizeConnection(conn);
 
-		BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		BufferedReader in = new BufferedReader(new InputStreamReader(conn
+				.getInputStream()));
 
 		String response = null;
 		boolean restartInitiated = false;
@@ -227,7 +216,8 @@ public class JBossRestartMojo extends AbstractMojo {
 	 * Waits between 2 consecutive checks of server state and display progress.
 	 */
 	private void waitBetweenChecks() {
-		int divisionCount = RESTART_CHECK_INTERVAL_SECONDS / PROGRESS_INTERVAL_SECONDS;
+		int divisionCount = RESTART_CHECK_INTERVAL_SECONDS
+				/ PROGRESS_INTERVAL_SECONDS;
 		for (int i = 0; i < divisionCount; i++) {
 			try {
 				Thread.sleep(PROGRESS_INTERVAL_SECONDS * 1000);
@@ -255,12 +245,14 @@ public class JBossRestartMojo extends AbstractMojo {
 
 			// if the stream cannot be created (IOException), then the restart
 			// did not finish yet.
-			BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			BufferedReader in = new BufferedReader(new InputStreamReader(conn
+					.getInputStream()));
 
 			in.close();
 			restartComplete = true;
 		} catch (MalformedURLException e) {
-			throw new MojoExecutionException("Unparsable server restart URL: " + SERVER_RESTART_URL);
+			throw new MojoExecutionException("Unparsable server restart URL: "
+					+ SERVER_RESTART_URL);
 		} catch (IOException e) {
 			restartComplete = false;
 			getLog().info("Server restart is in progress.");
