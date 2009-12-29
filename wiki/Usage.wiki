@@ -25,8 +25,7 @@ http://code.google.com/p/jboss-jmx-maven-plugin/wiki/Security
 
 Install this Maven 2 plugin to your group repository using e.g. Nexus (or to your local repository if not using a group repository) using the below artifact coordinates:
 
-You don't need to check out this project, you can jump to download the pom and artifact files from:
-
+You don't need to check out the project (although you can), just download the pom and artifact files from:
 
 http://jboss-jmx-maven-plugin.googlecode.com/files/pom.xml
 
