@@ -1,5 +1,5 @@
 #summary Usage of this Maven 2 plugin
-#labels usage,Phase-Deploy
+#labels Phase-Deploy
 
 = Introduction =
 
