@@ -39,8 +39,9 @@ http://jboss-jmx-maven-plugin.googlecode.com/files/pom.xml
 
 b) Install the downloaded artifact your group repository (e.g. using Nexus) or to your local repository (if not using a group repository) by executing the below command from the command line:
 
-_mvn install:install-file -Dfile=/location/where/you/downloaded/jboss-jmx-plugin-0.1.jar -DpomFile=/location/where/you/downloaded/pom.xml_
-
+{{{
+mvn install:install-file -Dfile=/location/where/you/downloaded/jboss-jmx-plugin-0.1.jar -DpomFile=/location/where/you/downloaded/pom.xml
+}}}
 
 *Step 1*
 
