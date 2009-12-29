@@ -33,6 +33,13 @@ In your project's pom.xml add the following:
 </build>
 }}}
 
+All configuration settings are optional, they use default values if not configured:
+_serverHost_ = the host on which JBoss is running (its default value is _localhost_)
+_serverPort_ = the port on which JBoss is listening (its default value is _8080_)
+_jmxConsoleUser_ = the name of a user which has permission to restart JBoss via the JMX console (its default value is _admin_)
+_jmxConsolePassword_ = the password of the previously mentioned user (its default value is the empty string)
+_restartTimeout_ = the maximum time interval in seconds till the plugin waits for JBoss to complete the restart (its default value is _120_). If the restart takes more then this, then restart is considered FAILED.
+
 *Step 2*
 
 execute the _jboss-jmx-plugin:restart_ maven goal
