@@ -23,10 +23,12 @@ http://code.google.com/p/jboss-jmx-maven-plugin/wiki/Security
 
 *Step 0*
 
-Install this Maven 2 plugin to your group (or local, if not using a group repository) repository using the below pom coordinates:
+Install this Maven 2 plugin to your group (or local, if not using a group repository) repository using the below artifact coordinates:
 
 groupId = com.google.code
+
 artifactId = jboss-jmx-plugin
+
 version = 0.1
 
 *Step 1*
