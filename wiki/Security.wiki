@@ -1,4 +1,5 @@
 #summary JBoss security settings for the jmx-console and web-console
+#labels jboss,jmxconsole,web-console,security,user,password
 
 = Introduction =
 
@@ -43,9 +44,9 @@ admin=a_password_you_like
 =Securing the web-console=
 
 1) in .../jboss/server/default/deploy/management/console-mgr.sar/web-console.war/WEB-INF/jboss-web.xml uncomment:
-
+{{{
 <security-domain>java:/jaas/web-console</security-domain>
-
+}}}
 2) in .../jboss/server/default/deploy/management/console-mgr.sar/web-console.war/WEB-INF/web.xml uncomment:
 {{{
    <security-constraint>
