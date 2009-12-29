@@ -7,7 +7,7 @@ If you expose your JBoss server over the network (by starting the server using o
 
 Using these applications anybody from the network can e.g. stop your server, undeploy an application, deploy a different application etc. It is a good idea to secure it via a password (especially when talking about a production or UAT app server).
 
-Note: in the below setting examples I assumed that the "default" JBoss server configuration is used.
+_Note: in the below setting examples I assumed that the "default" JBoss server configuration is used._
 
 =Securing the jmx-console=
 
@@ -73,6 +73,6 @@ admin=a_password_you_like
 
 Remarks:
 
-- the Maven 2 Cargo plugin (and the JBoss restart plugin) uses the JMX console.
+- the Maven 2 jboss-jmx-plugin uses the JMX console (same way as maven-cargo-plugin does)
 
 - the web console is not needed, thus it should be disabled (by removing/commenting out the user/password line from web-console-users.properties)
