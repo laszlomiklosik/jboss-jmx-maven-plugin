@@ -3,7 +3,7 @@
 
 = Introduction =
 
-If you expose your JBoss server over the network (by starting the server using option -b 0.0.0.0 or by changing the first occurrence of variable jboss.bind.address to 0.0.0.0 in /apps/jboss/server/default/deploy/web-deployer/server.xml) you automatically expose also the JBoss web-console (http://localhost:8080/web-console) and jmx-console (http://localhost:8080/jmx-console) administration tools without any user/password.
+If you expose your JBoss server over the network (by starting the server using option -b 0.0.0.0 or by changing the first occurrence of variable jboss.bind.address to 0.0.0.0 in .../jboss/server/default/deploy/web-deployer/server.xml) you automatically expose also the JBoss web-console (http://localhost:8080/web-console) and jmx-console (http://localhost:8080/jmx-console) administration tools without any user/password.
 
 Using these applications anybody from the network can e.g. stop your server, undeploy an application, deploy a different application etc. It is a good idea to secure it via a password (especially when talking about a production or UAT app server).
 
