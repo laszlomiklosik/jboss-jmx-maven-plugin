@@ -7,6 +7,8 @@ If you expose your JBoss server over the network (by starting the server using o
 
 Using these applications anybody from the network can e.g. stop your server, undeploy an application, deploy a different application etc. It is a good idea to secure it via a password (especially when talking about a production or UAT app server).
 
+Note: in the below setting examples I assumed that the "default" JBoss server configuration is used.
+
 =Securing the jmx-console=
 
 1) in .../jboss/server/default/deploy/jmx-console.war/WEB-INF/jboss-web.xml uncomment:
