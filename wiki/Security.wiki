@@ -1,5 +1,5 @@
 #summary JBoss security settings for the jmx-console and web-console
-#labels Phase-Requirements
+#labels Phase-Support
 
 = Introduction =
 
