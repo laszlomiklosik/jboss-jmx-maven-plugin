@@ -19,7 +19,8 @@ In your project's pom.xml add the following:
 	<plugins>
 		<plugin>
 			<groupId>com.google.code</groupId>
-			<artifactId>jboss-jmx</artifactId>
+			<artifactId>jboss-jmx-plugin</artifactId>
+			<version>0.1</version>
 			<configuration>
 				<serverHost>hostname</serverHost>
 				<serverPort>8080</serverPort>
@@ -34,6 +35,6 @@ In your project's pom.xml add the following:
 
 *Step 2*
 
-execute the _jboss-jmx:restart_ maven goal
+execute the _jboss-jmx-plugin:restart_ maven goal
 
-(e.g. execute _mvn jboss-jmx:restart_ from the command line of your project's root directory)
+(e.g. execute _mvn jboss-jmx-plugin:restart_ from the command line of a project's root directory)
