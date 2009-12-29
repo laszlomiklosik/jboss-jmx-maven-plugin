@@ -27,7 +27,9 @@ Install this Maven 2 plugin to your group repository using e.g. Nexus (or to you
 
 You don't need to check out this project, you can jump to download the pom and artifact files from:
 
+
 http://jboss-jmx-maven-plugin.googlecode.com/files/pom.xml
+
 http://jboss-jmx-maven-plugin.googlecode.com/files/jboss-jmx-plugin-0.1.jar
 
 *Step 1*
