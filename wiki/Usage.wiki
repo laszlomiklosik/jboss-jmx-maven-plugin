@@ -3,13 +3,23 @@
 
 = Introduction =
 
-TODO: add some intro here
+In order for this plugin to work you first need to:
+1) make your server visible from other machines, not only localhost. For this you only need to start JBoss (run.sh or run.bat) using the 
+_-b 0.0.0.0_ 
+argument.
+
+2) think about security
+Now that your JBoss server is visible to everybody from your network, you mught want to secure its jmx-console (http://localhost:8080/jmx-console) and web-console (http://localhost:8080/web-console) using a user/password.
 
 = Usage =
 
 *Step 0*
 
-Install this Maven 2 plugin to your group (or local, if not using a group repository) repository.
+Install this Maven 2 plugin to your group (or local, if not using a group repository) repository using the below pom coordinates:
+
+groupId = com.google.code
+artifactId = jboss-jmx-plugin
+version = 0.1
 
 *Step 1*
 
