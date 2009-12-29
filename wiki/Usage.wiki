@@ -29,7 +29,7 @@ http://code.google.com/p/jboss-jmx-maven-plugin/wiki/Security
 
 = Usage =
 
-*Step 0*
+*Step 1*
 
 a) You don't need to check out the project (although you can), just download the jar and pom from:
 
@@ -43,7 +43,7 @@ b) Install the downloaded artifact your group repository (e.g. using Nexus) or t
 mvn install:install-file -Dfile=/location/where/you/downloaded/jboss-jmx-plugin-0.1.jar -DpomFile=/location/where/you/downloaded/pom.xml
 }}}
 
-*Step 1*
+*Step 2*
 
 In your project's pom.xml add the following:
 {{{
@@ -78,7 +78,7 @@ _jmxConsolePassword_ = the password of the previously mentioned user (its defaul
 _restartTimeout_ = the maximum time interval in seconds till the plugin waits for JBoss to complete the restart (its default value is _120_). If the restart takes more then this, then the restart attempt is considered failed.
 
 
-*Step 2*
+*Step 3*
 
 execute the _jboss-jmx:restart_ maven goal
 
