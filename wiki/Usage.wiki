@@ -10,6 +10,7 @@ _-b 0.0.0.0_
 argument.
 
 2) think about security
+
 Now that your JBoss server is visible to everybody from your network, you mught want to secure its jmx-console (http://localhost:8080/jmx-console) and web-console (http://localhost:8080/web-console) using a user/password.
 
 = Usage =
