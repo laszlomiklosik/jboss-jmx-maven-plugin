@@ -67,7 +67,7 @@ In your project's pom.xml add the following:
 </build>
 }}}
 
-All configuration settings are optional, they use default values if not configured:
+All configuration settings are optional, they use default values unless configured explicitly:
 
 _serverHost_ = the host on which JBoss is running (its default value is _localhost_)
 
