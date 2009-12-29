@@ -41,12 +41,6 @@ public class JBossRestartMojo extends AbstractMojo {
 			+ "name=jboss.system:type=Server";
 
 	/**
-	 * The time interval between 2 consecutive progress indicator dots (in
-	 * seconds).
-	 */
-	private static final int PROGRESS_INTERVAL_SECONDS = 1;
-
-	/**
 	 * The time interval between 2 consecutive server state checks.
 	 */
 	private static final int RESTART_CHECK_INTERVAL_SECONDS = 5;
@@ -143,14 +137,23 @@ public class JBossRestartMojo extends AbstractMojo {
 	}
 
 	/**
-	 * Applies authorization to the connection using the user/password from the
-	 * mojo configuration.
+	 * Connects to an url by using the authorization settings from the mojo
+	 * configuration.
 	 */
-	private void authorizeConnection(URLConnection conn) {
+	private URLConnection connect(String urlString) throws IOException,
+			MojoExecutionException {
+		URL url = null;
+		try {
+			url = new URL(urlString);
+		} catch (MalformedURLException e) {
+			throw new MojoExecutionException("Unparsable URL: " + urlString);
+		}
+		URLConnection conn = url.openConnection();
 		String authorizationString = jmxConsoleUser + ":" + jmxConsolePassword;
 		String encoding = new BASE64Encoder().encode(authorizationString
 				.getBytes());
 		conn.setRequestProperty("Authorization", "Basic " + encoding);
+		return conn;
 
 	}
 
@@ -158,20 +161,10 @@ public class JBossRestartMojo extends AbstractMojo {
 	 * Initiates a restart via the JMX console.
 	 */
 	private void initiateRestart() throws IOException, MojoExecutionException {
-		URL url = null;
-		try {
-			url = new URL(processURL(SERVER_RESTART_URL));
-		} catch (MalformedURLException e) {
-			throw new MojoExecutionException("Unparsable server restart URL: "
-					+ SERVER_RESTART_URL);
-		}
-
-		URLConnection conn = url.openConnection();
-		authorizeConnection(conn);
-
+		String restartURL = processURL(SERVER_RESTART_URL);
+		URLConnection conn = connect(restartURL);
 		BufferedReader in = new BufferedReader(new InputStreamReader(conn
 				.getInputStream()));
-
 		String response = null;
 		boolean restartInitiated = false;
 
@@ -205,27 +198,25 @@ public class JBossRestartMojo extends AbstractMojo {
 		}
 
 		if (!restartCompleted) {
-			throw new MojoExecutionException(
-					"Could not restart JBoss in "
-							+ restartTimeout
-							+ " seconds. You should increase the restartTimeout configuration setting in your pom.xml.");
+			throw new MojoExecutionException("Could not restart JBoss in "
+					+ restartTimeout + " seconds. You should increase the "
+					+ "restartTimeout configuration setting in your pom.xml.");
 		}
 	}
 
 	/**
-	 * Waits between 2 consecutive checks of server state and display progress.
+	 * Waits between 2 consecutive checks of server state and display time
+	 * progress.
 	 */
 	private void waitBetweenChecks() {
-		int divisionCount = RESTART_CHECK_INTERVAL_SECONDS
-				/ PROGRESS_INTERVAL_SECONDS;
-		for (int i = 0; i < divisionCount; i++) {
+		for (int i = 0; i < RESTART_CHECK_INTERVAL_SECONDS; i++) {
 			try {
-				Thread.sleep(PROGRESS_INTERVAL_SECONDS * 1000);
+				Thread.sleep(1000);
+				// display progress every second.
+				getLog().info(".");
 			} catch (InterruptedException e) {
 				getLog().error("Error occured while waiting between checks.");
 			}
-			// display progress
-			getLog().info(".");
 		}
 	}
 
@@ -239,9 +230,8 @@ public class JBossRestartMojo extends AbstractMojo {
 	private boolean isRestartComplete() throws MojoExecutionException {
 		boolean restartComplete = false;
 		try {
-			URL url = new URL(processURL(SERVER_INSPECT_URL));
-			URLConnection conn = url.openConnection();
-			authorizeConnection(conn);
+			String inspectURL = processURL(SERVER_INSPECT_URL);
+			URLConnection conn = connect(inspectURL);
 
 			// if the stream cannot be created (IOException), then the restart
 			// did not finish yet.
@@ -250,9 +240,6 @@ public class JBossRestartMojo extends AbstractMojo {
 
 			in.close();
 			restartComplete = true;
-		} catch (MalformedURLException e) {
-			throw new MojoExecutionException("Unparsable server restart URL: "
-					+ SERVER_RESTART_URL);
 		} catch (IOException e) {
 			restartComplete = false;
 			getLog().info("Server restart is in progress.");
