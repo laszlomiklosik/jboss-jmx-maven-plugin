@@ -16,7 +16,12 @@ argument.
 Now that your JBoss server is visible to everybody from your network, you mught want to secure its jmx-console (http://localhost:8080/jmx-console) and web-console (http://localhost:8080/web-console) using a user/password.
 
 Details on this can be found at:
+
 http://community.jboss.org/wiki/securetheJmxConsole
+
+or more to the subject:
+
+http://code.google.com/p/jboss-jmx-maven-plugin/wiki/Security
 
 = Usage =
 
