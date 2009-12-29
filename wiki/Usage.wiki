@@ -6,12 +6,17 @@
 In order for this plugin to work you first need to:
 
 1) make your server visible from other machines, not only localhost. For this you only need to start JBoss (run.sh or run.bat) using the 
-_-b 0.0.0.0_ 
+
+_-b 0.0.0.0_
+
 argument.
 
 2) think about security
 
 Now that your JBoss server is visible to everybody from your network, you mught want to secure its jmx-console (http://localhost:8080/jmx-console) and web-console (http://localhost:8080/web-console) using a user/password.
+
+Details on this can be found at:
+http://community.jboss.org/wiki/securetheJmxConsole
 
 = Usage =
 
