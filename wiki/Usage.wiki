@@ -13,7 +13,15 @@ argument.
 
 2) think about security
 
-Now that your JBoss server is visible to everybody from your network, you should secure the jmx-console (http://localhost:8080/jmx-console) and the web-console (http://localhost:8080/web-console) using a user/password.
+Now that your JBoss server is visible to everybody from your network, you should secure 
+
+- the jmx-console (http://localhost:8080/jmx-console) 
+
+and  
+
+- the web-console (http://localhost:8080/web-console) 
+
+using a user/password.
 
 See details on page:
 
@@ -23,7 +31,7 @@ http://code.google.com/p/jboss-jmx-maven-plugin/wiki/Security
 
 *Step 0*
 
-Install this Maven 2 plugin to your group repository using e.g. Nexus (or to your local repository if not using a group repository) using the below artifact coordinates:
+Install this Maven 2 plugin to your group repository e.g. using Nexus (or to your local repository if not using a group repository).
 
 You don't need to check out the project (although you can), just download the pom and artifact files from:
 
