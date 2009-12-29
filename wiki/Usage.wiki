@@ -79,10 +79,6 @@ _restartTimeout_ = the maximum time interval in seconds till the plugin waits fo
 
 *Step 3*
 
-execute the 
-{{{
-jboss-jmx:restart
-}}}
-maven goal
+execute the {{{jboss-jmx:restart}}} maven goal
 
 (e.g. execute {{{ mvn jboss-jmx:restart }}} from the command line of your project's root directory)
