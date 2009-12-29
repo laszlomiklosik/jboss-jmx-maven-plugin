@@ -1,5 +1,1 @@
-1) add timeout setting (after how many seconds should it stop waiting and say that restart was not possible).
-2) make the display of progress simpler.
-3) treat Windows/Linux differences. If possible not rely on methodIndex if possible.
-4) test with several JBoss versions and OS linux/windows.
-5) log the time elapsed for completing the restart.
+1) test with newer JBoss versions on both linux/windows.
