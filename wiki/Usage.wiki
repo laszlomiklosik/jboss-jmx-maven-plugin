@@ -35,18 +35,41 @@ _Note: the restart plugin works without these security settings, however securin
 
 = Usage =
 
-*Step 1*
+*Step 1: Make the jboss-jmx-plugin visible to your (group or local) repository.
 
-a) You don't need to check out the project (although you can), just download the jar and pom from:
+For this do any of the following:
+
+a) Add
+ 
+{{{
+  <repository>
+    <id>jboss-jmx-plugin-repository</id>
+    <url>http://jboss-jmx-maven-plugin.googlecode.com/svn/maven/repository</url>
+  </repository>
+}}}
+
+to your settings.xml or pom.xml.
+
+b) The second option is to add http://jboss-jmx-maven-plugin.googlecode.com/svn/maven/repository as a proxy repository in your group repository (e.g. using Nexus).
+
+c) The third option is to download files:
 
 http://jboss-jmx-maven-plugin.googlecode.com/files/jboss-jmx-plugin-0.1.jar
 
 http://jboss-jmx-maven-plugin.googlecode.com/files/pom.xml
 
-b) Install the downloaded artifact your group repository (e.g. using Nexus) or to your local repository (by executing the below command from the command line: 
-{{{ mvn install:install-file -Dfile=/location/where/you/downloaded/jboss-jmx-plugin-0.1.jar -DpomFile=/location/where/you/downloaded/pom.xml}}})
+and install them:
+* to your group repository (e.g. using Nexus) 
+or 
+* to your local repository (by executing the below command from the command line:
+{{{ mvn install:install-file -Dfile=/location/where/you/downloaded/jboss-jmx-plugin-*.jar -DpomFile=/location/where/you/downloaded/pom.xml}}})
 
-*Step 2*
+d) The fourth option is to build the library yourself (using Maven):
+
+    * svn checkout http://jboss-jmx-maven-plugin.googlecode.com/svn/trunk/ jboss-jmx-maven-plugin-read-only
+    * {{{ mvn install }}}
+
+*Step 2: Refer the plugin in your pom.xml file and configure the necessary settings *
 
 In your project's pom.xml add the following:
 {{{
@@ -81,7 +104,7 @@ _jmxConsolePassword_ = the password of the previously mentioned user (its defaul
 _restartTimeout_ = the maximum time interval in seconds till the plugin waits for JBoss to complete the restart (its default value is _120_). If the restart takes more then this, then the restart attempt is considered failed.
 
 
-*Step 3*
+*Step 3: Use it *
 
 execute the {{{jboss-jmx:restart}}} maven goal
 
