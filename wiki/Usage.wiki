@@ -31,7 +31,7 @@ See details on page:
 
 http://code.google.com/p/jboss-jmx-maven-plugin/wiki/Security
 
-_Note: the restart plugin works without these security settings, however securing your server is encouraged._
+_Note: this plugin works without these security settings, however securing your server is encouraged._
 
 = Usage =
 
