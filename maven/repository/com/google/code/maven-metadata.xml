@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?><metadata>
+  <plugins>
+    <plugin>
+      <name>jboss-jmx-plugin Maven Mojo</name>
+      <prefix>jboss-jmx</prefix>
+      <artifactId>jboss-jmx-plugin</artifactId>
+    </plugin>
+  </plugins>
+</metadata>
