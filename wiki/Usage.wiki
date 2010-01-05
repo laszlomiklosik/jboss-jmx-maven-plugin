@@ -48,7 +48,7 @@ a. Add
   </repository>
 }}}
 
-to your settings.xml or pom.xml.
+to your pom.xml or settings.xml.
 
 b. The second option is to add http://jboss-jmx-maven-plugin.googlecode.com/svn/maven/repository as a proxy repository in your group repository (e.g. using Nexus).
 
