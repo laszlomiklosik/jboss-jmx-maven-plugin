@@ -3,13 +3,13 @@
 	<groupId>com.google.code</groupId>
 	<artifactId>jboss-jmx-plugin</artifactId>
 	<packaging>maven-plugin</packaging>
-	<version>0.1.3-SNAPSHOT</version>
+	<version>0.1.3</version>
 	<name>jboss-jmx-plugin Maven Mojo</name>
 	<url>http://maven.apache.org</url>
 	<scm>
-		<connection>scm:svn:https://jboss-jmx-maven-plugin.googlecode.com/svn/trunk</connection>
-		<developerConnection>scm:svn:https://jboss-jmx-maven-plugin.googlecode.com/svn/trunk</developerConnection>
-		<url>https://jboss-jmx-maven-plugin.googlecode.com/svn/trunk</url>
+		<connection>scm:svn:https://jboss-jmx-maven-plugin.googlecode.com/svn/tags/jboss-jmx-plugin-0.1.3</connection>
+		<developerConnection>scm:svn:https://jboss-jmx-maven-plugin.googlecode.com/svn/tags/jboss-jmx-plugin-0.1.3</developerConnection>
+		<url>https://jboss-jmx-maven-plugin.googlecode.com/svn/tags/jboss-jmx-plugin-0.1.3</url>
 	</scm>
 
 	<dependencies>
