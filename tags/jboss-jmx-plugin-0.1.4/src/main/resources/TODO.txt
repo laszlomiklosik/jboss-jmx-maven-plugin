@@ -1,0 +1,1 @@
+1) test with newer JBoss versions on both linux/windows.
