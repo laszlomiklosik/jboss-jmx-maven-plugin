@@ -30,7 +30,7 @@ public class JBossRestartMojo extends AbstractMojo {
 	private static final String SUCCESS = "success";
 
 	/**
-	 * JBoss restart via JMX URL.
+	 * JBoss restart via JMX URL 11
 	 */
 	private static final String SERVER_RESTART_URL = "/jmx-console/HtmlAdaptor?action=invokeOpByName&"
 			+ "name=jboss.system:type=Server&methodName=exit&argType=int&arg0=10";
