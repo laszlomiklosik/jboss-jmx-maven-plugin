@@ -13,8 +13,6 @@ import org.apache.maven.plugin.MojoFailureException;
 
 import sun.misc.BASE64Encoder;
 
-// GIT TEST 3
-
 /**
  * JBoss restart mojo - use to restart a JBoss server via its JMX console.
  * 
